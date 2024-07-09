@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RajPortfolio.Data;
 using RajPortfolio.Models;
@@ -21,9 +22,24 @@ namespace RajPortfolio.Pages.Tracks
 
         public IList<Track> Track { get;set; } = default!;
 
+        [BindProperty(SupportsGet = true)]
+        public string? SearchString { get; set; }
+
+        public SelectList? Titles { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string? TrackTitle { get; set; }
+
         public async Task OnGetAsync()
         {
-            Track = await _context.Track.ToListAsync();
+            var tracks = from t in _context.Track
+                            select t;
+            if (!string.IsNullOrEmpty(SearchString))
+            {
+                tracks = tracks.Where(s => s.Title.Contains(SearchString));
+            }
+
+            Track = await tracks.ToListAsync();
         }
     }
 }
