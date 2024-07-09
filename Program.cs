@@ -1,7 +1,24 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using RajPortfolio.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<RajPortfolioContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("RajPortfolioContext") ?? throw new InvalidOperationException("Connection string 'RajPortfolioContext' not found.")));
+
+// Checks which environment we're working in and applies the relevant db
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDbContext<RajPortfolioContext>(options =>
+        options.UseSqlite(builder.Configuration.GetConnectionString("RajPortfolioContext")));
+}
+else
+{
+    builder.Services.AddDbContext<RajPortfolioContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("ProductionTrackContext")));
+}
 
 var app = builder.Build();
 
