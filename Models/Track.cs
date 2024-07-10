@@ -8,4 +8,6 @@ public class Track
     public string? Title { get; set; }
     [Display(Name = "Length")]
     public double length { get; set; }
+
+    public string Genre { get; set; } = string.Empty;
 }

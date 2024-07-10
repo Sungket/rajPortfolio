@@ -26,25 +26,29 @@ public static class SeedData
                 new Track
                 {
                     Title = "Pulse X",
-                    length = 4.25
+                    length = 4.25,
+                    Genre = "Bassline"
                 },
 
                 new Track
                 {
                     Title = "Jungle",
-                    length = 5.23
+                    length = 5.23,
+                    Genre = "Jungle"
                 },
 
                 new Track
                 {
                     Title = "Honey",
-                    length = 6.11
+                    length = 6.11,
+                    Genre = "RnB"
                 },
 
                 new Track
                 {
                     Title = "Rio Bravo",
-                    length = 8.33
+                    length = 8.33,
+                    Genre = "Samba"
                 }
             );
             context.SaveChanges();
